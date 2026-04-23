@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DEBUG MISSION</title>
+  <style>
+    body {
+      font-family: monospace;
+      background: black;
+      color: #00ff88;
+      text-align: center;
+      padding-top: 80px;
+    }
+    input, button {
+      padding: 10px;
+      font-family: monospace;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>🔐 SYSTEM LOCKED</h2>
+<p>Fix the output:</p>
+
+<pre>
+console.log(typeof (5 + "5"));
+</pre>
+
+<input id="answer" placeholder="string / number / etc">
+<button onclick="check()">RUN</button>
+
+<p id="msg"></p>
+
+<script>
+function check() {
+  let a = document.getElementById("answer").value.toLowerCase();
+
+  // correct answer: string
+  if (a === "string") {
+    window.location.href = "birthday.html";
+  } else {
+    document.getElementById("msg").innerText = "ACCESS DENIED ❌";
+  }
+}
+</script>
+
+</body>
+</html>
