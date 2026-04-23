@@ -1,45 +1,131 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>DEBUG MISSION</title>
+  <title>DEV DEBUG CHALLENGE</title>
   <style>
     body {
       font-family: monospace;
-      background: black;
+      background: #0b0f14;
       color: #00ff88;
       text-align: center;
-      padding-top: 80px;
+      padding-top: 60px;
+    }
+    .box {
+      border: 1px solid #00ff88;
+      display: inline-block;
+      padding: 20px;
+      width: 450px;
     }
     input, button {
       padding: 10px;
-      font-family: monospace;
       margin-top: 10px;
+      font-family: monospace;
+    }
+    code {
+      color: #ffcc00;
+      display: block;
+      margin: 10px 0;
     }
   </style>
 </head>
+
 <body>
 
-<h2>🔐 SYSTEM LOCKED</h2>
-<p>Fix the output:</p>
+<div class="box">
+  <h2>🔐 LEVEL 1 — JS QUIRK</h2>
+  <p>What is the output?</p>
 
-<pre>
-console.log(typeof (5 + "5"));
-</pre>
+  <code>console.log([] + {})</code>
 
-<input id="answer" placeholder="string / number / etc">
-<button onclick="check()">RUN</button>
-
-<p id="msg"></p>
+  <input id="l1" placeholder="answer">
+  <button onclick="check1()">RUN</button>
+  <p id="r1"></p>
+</div>
 
 <script>
-function check() {
-  let a = document.getElementById("answer").value.toLowerCase();
+function check1() {
+  let a = document.getElementById("l1").value.toLowerCase().replace(/\s/g,'');
 
-  // correct answer: string
-  if (a === "string") {
-    window.location.href = "birthday.html";
+  // correct answer: "[objectobject]" (JS coercion)
+  if (a.includes("object")) {
+
+    document.body.innerHTML = `
+      <div class="box">
+        <h2>🔐 LEVEL 2 — BUG HUNT</h2>
+
+        <p>Something is wrong here:</p>
+
+        <code>
+const user = {
+  name: "Tom",
+  getName: function() {
+    return this.name;
+  }
+}
+
+const fn = user.getName;
+fn();
+        </code>
+
+        <p>Why is the output wrong? (1 word)</p>
+
+        <input id="l2" placeholder="answer">
+        <button onclick="check2()">RUN</button>
+        <p id="r2"></p>
+      </div>
+    `;
   } else {
-    document.getElementById("msg").innerText = "ACCESS DENIED ❌";
+    document.getElementById("r1").innerText = "Not quite. Think JS type coercion 👀";
+  }
+}
+</script>
+
+<script>
+function check2() {
+  let a = document.getElementById("l2").value.toLowerCase();
+
+  // expected: this / context / binding
+  if (a.includes("this") || a.includes("context") || a.includes("binding")) {
+
+    document.body.innerHTML = `
+      <div class="box">
+        <h2>🔐 LEVEL 3 — ARRAY LOGIC</h2>
+
+        <p>What does this return?</p>
+
+        <code>
+[1,2,3,4].filter(x => x % 2 === 0).map(x => x * 10)
+        </code>
+
+        <input id="l3" placeholder="answer (array)">
+        <button onclick="check3()">RUN</button>
+        <p id="r3"></p>
+      </div>
+    `;
+  } else {
+    document.getElementById("r2").innerText = "Think JS execution context 👀";
+  }
+}
+</script>
+
+<script>
+function check3() {
+  let a = document.getElementById("l3").value.replace(/\s/g,'');
+
+  // correct: [20,40]
+  if (a.includes("20") && a.includes("40")) {
+
+    document.body.innerHTML = `
+      <div class="box">
+        <h1>🎉 ACCESS GRANTED 🎉</h1>
+        <p style="font-size:18px;">
+          Happy Birthday ❤️<br><br>
+          I love you 💕
+        </p>
+      </div>
+    `;
+  } else {
+    document.getElementById("r3").innerText = "Think map/filter chain 😏";
   }
 }
 </script>
